@@ -3,8 +3,6 @@ package com.pluralsight;
 import java.util.*;
 
 public class FamousQuotes {
-    public static int index;
-
     public static void main(String[] args) {
 
         String[] quotes = {"Be like a diamond, precious and rare, not like a stone, found everywhere.",
@@ -18,39 +16,44 @@ public class FamousQuotes {
                 "If you don't stand for something, you'll fall for anything.",
                 "The most common way people give up their power is by thinking they don’t have any."};
 
-        Scanner scanner = new Scanner(System.in);
+        boolean isDone = false;
 
         try {
-            System.out.println("Please select a quote from using 1-10: ");
-            int index = scanner.nextInt();
-            index--;
+            do {
+                int index = getIntInput("Please pick a quote from 1-10: ");
+                index--;
+                System.out.println(quotes[index]);
 
-            System.out.println(quotes[index]);
-            System.out.println("Would you like an additional quote? (yes/no)");
+                String reply = getStringInput("Would you like an additional quote? (yes/no)");
 
-            String yesInput = "yes";
-            String noInput = "no";
-            String reply = scanner.next();
-            while (reply.equals(yesInput)) {
-                reply = scanner.next().toLowerCase();
-
-                if (reply.equals(yesInput)) {
-                    System.out.println("Please select a quote from using 1-10: ");
-
-                }
-                else if (reply.equals(noInput)) {
-                    System.out.println("Understandable, have a nice day!");
-                }
-                else {
-                    System.out.println("Incorrect input. Please only enter a number between 1-10!");
+                if (reply.equals("no")) {
+                    isDone = true;
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Incorrect input. Please only enter a number between 1-10! Try again.");
-            System.out.println("Please select a quote from using 1-10: ");
-            int index = scanner.nextInt();
 
-            System.out.println(quotes[index]);
+            while (!isDone);
+
+        } catch (Exception e) {
+            System.out.println("Ayo bud, that's incorrect!");
         }
+    }
+
+
+
+    public static int getIntInput(String prompt){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(prompt);
+        int input = scanner.nextInt();
+        scanner.nextLine();
+        return input;
+    }
+
+    public static String getStringInput(String prompt) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(prompt);
+        String input = scanner.next();
+        scanner.nextLine();
+//        scanner.close();
+        return input;
     }
 }
